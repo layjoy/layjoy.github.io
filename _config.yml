@@ -33,6 +33,7 @@ comments :
 
 # Internal nav
 nav:
+  - 首页: "http://layjoy.github.io/"
   - 相册: "http://layjoy.github.io/gallery/"
   - 日志: "http://layjoy.github.io/journal/"
   - 关于: "http://layjoy.github.io/about/"
