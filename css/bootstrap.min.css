@@ -5517,6 +5517,7 @@ textarea.input-group-sm>.input-group-btn>.btn {
 
 .navbar-default .navbar-text {
   color: #777
+  font-size: 24px;
 }
 
 .navbar-default .navbar-nav>li>a {
