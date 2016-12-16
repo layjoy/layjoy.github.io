@@ -33,9 +33,9 @@ comments :
 
 # Internal nav
 nav:
-  - <h2>首页</h2>: "http://layjoy.github.io/"
+  - 首页: "http://layjoy.github.io/"
   - 相册: "http://layjoy.github.io/gallery/"
-  - 日志: "http://layjoy.github.io/journal/"
+  - 日志: "http://layjoy.github.io/journal/category"
   - 关于: "http://layjoy.github.io/about/"
 
 # All translation keys
