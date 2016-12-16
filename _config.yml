@@ -1,13 +1,13 @@
 # Site settings
-title: PHOTORAMA
+title: layjoy
 email: ""
-description: "Photo Journal"
+description: "My personal blog website"
 url: "http://layjoy.github.io"
 baseurl: ""
-facebook_username: ""
+facebook_username: "layjoy"
 twitter_username: ""
 instagram_username: ""
-github_username:  ""
+github_username:  "layjoy"
 deviantart_username: ""
 flickr_username: ""
 discus_shortname: ""
@@ -17,7 +17,7 @@ share: true
 owner:
   name:   layjoy
   avatar: avatar.png
-  favicon: favicon.ico
+  favicon: favicon.png
   info: photography website template
 
 # Settings for comments helper
@@ -33,9 +33,9 @@ comments :
 
 # Internal nav
 nav:
-  - GALLERY: "http://layjoy.github.io/gallery/"
-  - JOURNAL: "http://layjoy.github.io/journal/"
-  - ABOUT: "http://layjoy.github.io/about/"
+  - 相册: "http://layjoy.github.io/gallery/"
+  - 日志: "http://layjoy.github.io/journal/"
+  - 关于: "http://layjoy.github.io/about/"
 
 # All translation keys
 translations:
