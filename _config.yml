@@ -17,7 +17,7 @@ share: true
 owner:
   name:   layjoy
   avatar: avatar.png
-  favicon: favicon.png
+  favicon: favicon.ico
   info: photography website template
 
 # Settings for comments helper
