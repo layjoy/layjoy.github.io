@@ -1,5 +1,5 @@
 /* Starlight Island — cache static game + BGM */
-const VERSION = 'starlight-shell-v1';
+const VERSION = 'starlight-shell-v2';
 const AUDIO_CACHE = 'starlight-audio-v1';
 
 self.addEventListener('install', (event) => {
