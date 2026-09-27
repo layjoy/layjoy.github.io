@@ -287,3 +287,19 @@ html, body {
 #hud:not(.hidden) .mission-banner,
 #hud:not(.hidden) .partner-dot { pointer-events: auto; }
 .btn, .action-btn, .stick-wrap, label.toggle { pointer-events: auto; touch-action: manipulation; }
+
+.action-btn.tertiary-act { width: 56px; height: 56px; opacity: 0.95; }
+.action-btn { position: relative; overflow: hidden; }
+.action-btn.on-cd { opacity: 0.55; filter: saturate(0.6); }
+.cd-ring {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: conic-gradient(rgba(0,0,0,.55) var(--cd, 0%), transparent 0);
+  pointer-events: none; z-index: 1;
+}
+.action-btn .action-icon, .action-btn .action-name { position: relative; z-index: 2; }
+.action-row { gap: 10px; }
+@media (max-width: 420px) {
+  .action-btn.primary-act { width: 70px; height: 70px; }
+  .action-btn.secondary-act { width: 58px; height: 58px; }
+  .action-btn.tertiary-act { width: 50px; height: 50px; }
+}

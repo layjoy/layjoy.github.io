@@ -8,7 +8,7 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="theme-color" content="#1a4a6a" />
   <title>星光岛传说</title>
-  <link rel="stylesheet" href="css/style.css?v=2609271057" />
+  <link rel="stylesheet" href="css/style.css?v=2609271107" />
   <script src="vendor/peerjs.min.js"></script>
 </head>
 <body>
@@ -47,13 +47,20 @@
           </div>
         </div>
         <div class="action-row">
-          <button id="btn-act-x1" class="action-btn primary-act" type="button">
-            <span class="action-icon" id="icon-x1">⚔</span>
-            <span class="action-name" id="name-x1">互动</span>
+          <button id="btn-act-x3" class="action-btn tertiary-act" type="button">
+            <span class="cd-ring" id="cd-x3"></span>
+            <span class="action-icon" id="icon-x3">✨</span>
+            <span class="action-name" id="name-x3">星火矢</span>
           </button>
-          <button id="btn-act-x2" class="action-btn secondary-act hidden" type="button">
-            <span class="action-icon" id="icon-x2">✨</span>
-            <span class="action-name" id="name-x2">—</span>
+          <button id="btn-act-x2" class="action-btn secondary-act" type="button">
+            <span class="cd-ring" id="cd-x2"></span>
+            <span class="action-icon" id="icon-x2">💨</span>
+            <span class="action-name" id="name-x2">闪步</span>
+          </button>
+          <button id="btn-act-x1" class="action-btn primary-act" type="button">
+            <span class="cd-ring" id="cd-x1"></span>
+            <span class="action-icon" id="icon-x1">⚔</span>
+            <span class="action-name" id="name-x1">连斩</span>
           </button>
         </div>
       </div>
@@ -65,13 +72,20 @@
           </div>
         </div>
         <div class="action-row">
-          <button id="btn-act-a1" class="action-btn primary-act holdable" type="button">
-            <span class="action-icon" id="icon-a1">✋</span>
-            <span class="action-name" id="name-a1">推/互动</span>
+          <button id="btn-act-a3" class="action-btn tertiary-act" type="button">
+            <span class="cd-ring" id="cd-a3"></span>
+            <span class="action-icon" id="icon-a3">💥</span>
+            <span class="action-name" id="name-a3">大地震击</span>
           </button>
           <button id="btn-act-a2" class="action-btn secondary-act" type="button">
+            <span class="cd-ring" id="cd-a2"></span>
             <span class="action-icon" id="icon-a2">🛡</span>
             <span class="action-name" id="name-a2">护盾猛击</span>
+          </button>
+          <button id="btn-act-a1" class="action-btn primary-act holdable" type="button">
+            <span class="cd-ring" id="cd-a1"></span>
+            <span class="action-icon" id="icon-a1">✋</span>
+            <span class="action-name" id="name-a1">推/砍</span>
           </button>
         </div>
       </div>
@@ -119,8 +133,8 @@
             <h3>小星</h3>
             <p>敏捷的孩子 · 绿色勇士服</p>
             <ul>
-              <li>钻过矮洞与管道</li>
-              <li>挥剑攻击史莱姆</li>
+              <li>钻洞 · 连斩 · 闪步无敌</li>
+              <li>星火矢眩晕 · 草丛潜行</li>
               <li>站踏板、开宝箱</li>
             </ul>
           </button>
@@ -129,9 +143,9 @@
             <h3>阿彻</h3>
             <p>强壮的家长 · 护盾勇者</p>
             <ul>
-              <li>推动沉重石块</li>
-              <li>护盾猛击眩晕敌人</li>
-              <li>保护小星前进</li>
+              <li>推石 · 盾击斩 · 举盾</li>
+              <li>护盾猛击眩晕 / 破盾</li>
+              <li>大地震击击退群敌</li>
             </ul>
           </button>
         </div>
@@ -191,7 +205,7 @@
           <div>
             <h3>操作</h3>
             <p>虚拟摇杆移动 · 右侧按钮互动/攻击</p>
-            <p>桌面：WASD 移动 · J 互动/攻击 · K 护盾（阿彻）</p>
+            <p>桌面：WASD 移动 · J 攻击/互动 · K 技能2 · L 技能3</p>
             <p>心心归零会回到最近检查点。</p>
           </div>
         </div>
@@ -227,7 +241,7 @@
     <div id="vignette" class="vignette"></div>
     <div id="letterbox" class="letterbox hidden"><div class="lb-top"></div><div class="lb-bot"></div><div class="lb-title" id="lb-title"></div></div>
   </div>
-  <script type="module" src="app.bundle.js?v=2609271057"></script>
+  <script type="module" src="app.bundle.js?v=2609271107"></script>
 <script>
 window.addEventListener('error', function (e) {
   var box = document.getElementById('boot-error');
