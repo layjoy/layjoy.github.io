@@ -6,14 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="theme-color" content="#0a1628" />
-  <title>星光小岛 · 断裂的观光电梯</title>
-  <link rel="stylesheet" href="css/style.css?v=2609271044" />
+  <meta name="theme-color" content="#1a4a6a" />
+  <title>星光岛传说</title>
+  <link rel="stylesheet" href="css/style.css?v=2609271057" />
   <script src="vendor/peerjs.min.js"></script>
 </head>
 <body>
-  <div id="boot-error" hidden style="position:fixed;inset:0;z-index:9999;background:#070d18;color:#e8f0ff;padding:24px;font-family:sans-serif;box-sizing:border-box;">
-  <h2 style="color:#ff8f4a;margin-top:0;">页面脚本加载失败</h2>
+  <div id="boot-error" hidden style="position:fixed;inset:0;z-index:9999;background:#0a1a28;color:#e8f0ff;padding:24px;font-family:sans-serif;box-sizing:border-box;">
+  <h2 style="color:#ff9a4a;margin-top:0;">页面脚本加载失败</h2>
   <p id="boot-error-msg" style="line-height:1.6;color:#8aa0c0;word-break:break-word;"></p>
   <p style="color:#8aa0c0;">请强制刷新。若还不行，把上面英文原文发给我。</p>
 </div>
@@ -26,10 +26,15 @@
         <button id="btn-pause" class="btn-icon" aria-label="暂停">Ⅱ</button>
         <div class="hud-stats">
           <span id="hud-role" class="hud-role role-xiaoxing">小星</span>
-          <span id="hud-chamber">舱室 A</span>
-          <span id="hud-sync">默契 ★★★</span>
+          <span id="hud-hearts" class="hud-hearts" aria-label="生命">♥♥♥♥♥</span>
+          <span id="hud-keys" class="hud-keys">🔑 —</span>
+          <span id="hud-shards" class="hud-shards">✦ 0</span>
         </div>
         <button id="btn-quality" class="btn-icon small">精致</button>
+      </div>
+      <div class="hud-sub">
+        <span id="hud-chamber">星光草原</span>
+        <span id="hud-sync">★ ★ ★</span>
       </div>
       <div class="mission-banner" id="mission-banner">等待指令…</div>
       <div class="partner-dot" id="partner-dot">● 等待搭档…</div>
@@ -43,12 +48,12 @@
         </div>
         <div class="action-row">
           <button id="btn-act-x1" class="action-btn primary-act" type="button">
-            <span class="action-icon" id="icon-x1">⚡</span>
+            <span class="action-icon" id="icon-x1">⚔</span>
             <span class="action-name" id="name-x1">互动</span>
           </button>
           <button id="btn-act-x2" class="action-btn secondary-act hidden" type="button">
-            <span class="action-icon" id="icon-x2">🪢</span>
-            <span class="action-name" id="name-x2">爪钩</span>
+            <span class="action-icon" id="icon-x2">✨</span>
+            <span class="action-name" id="name-x2">—</span>
           </button>
         </div>
       </div>
@@ -61,12 +66,12 @@
         </div>
         <div class="action-row">
           <button id="btn-act-a1" class="action-btn primary-act holdable" type="button">
-            <span class="action-icon" id="icon-a1">🔧</span>
-            <span class="action-name" id="name-a1">互动</span>
+            <span class="action-icon" id="icon-a1">✋</span>
+            <span class="action-name" id="name-a1">推/互动</span>
           </button>
           <button id="btn-act-a2" class="action-btn secondary-act" type="button">
             <span class="action-icon" id="icon-a2">🛡</span>
-            <span class="action-name" id="name-a2">护盾</span>
+            <span class="action-name" id="name-a2">护盾猛击</span>
           </button>
         </div>
       </div>
@@ -77,10 +82,10 @@
       <div class="panel hub-panel">
         <div class="logo">
           <div class="logo-mark">✦</div>
-          <h1>星光小岛</h1>
-          <p class="subtitle">断裂的观光电梯 · 亲子双机合作</p>
+          <h1>星光岛传说</h1>
+          <p class="subtitle">草原神庙 · 亲子双机冒险</p>
         </div>
-        <p class="coop-tagline">两部设备 · 非对称能力 · 默契闯关</p>
+        <p class="coop-tagline">两部手机 · 分工合作 · 解放星之灵</p>
         <div class="stats-bar"><span>★ 最高 <b id="stat-best">0</b></span></div>
         <div class="hub-main-actions">
           <button id="btn-create" class="btn primary big">创建房间</button>
@@ -90,14 +95,14 @@
         <div class="level-preview">
           <div class="lv-card unlocked">
             <span class="lv-num">01</span>
-            <span class="lv-name">断裂的观光电梯</span>
+            <span class="lv-name">第1神庙 · 风之祠</span>
             <span class="lv-stars" id="lv1-stars">☆☆☆</span>
           </div>
           <div class="lv-card locked"><span>02</span><small>制作中</small></div>
           <div class="lv-card locked"><span>03</span><small>制作中</small></div>
         </div>
         <div class="hub-footer">
-          <button id="btn-howto" class="btn text">操作说明</button>
+          <button id="btn-howto" class="btn text">冒险指南</button>
           <label class="toggle"><input type="checkbox" id="chk-music" checked /> 音乐</label>
         </div>
       </div>
@@ -106,27 +111,27 @@
     <!-- Role select -->
     <div id="screen-role" class="screen overlay hidden">
       <div class="panel">
-        <h2>选择角色</h2>
-        <p class="hint">每人操控一个角色 · 能力完全不同</p>
+        <h2>选择冒险者</h2>
+        <p class="hint">每人操控一个角色 · 能力不同才能通关</p>
         <div class="role-cards">
           <button class="role-card xiaoxing" id="pick-xiaoxing" type="button">
             <div class="role-portrait x-portrait">★</div>
             <h3>小星</h3>
-            <p>敏捷探索者 · 适合孩子</p>
+            <p>敏捷的孩子 · 绿色勇士服</p>
             <ul>
-              <li>钻入维护管道</li>
-              <li>爪钩锁定机关</li>
-              <li>闪避湍流路径</li>
+              <li>钻过矮洞与管道</li>
+              <li>挥剑攻击史莱姆</li>
+              <li>站踏板、开宝箱</li>
             </ul>
           </button>
           <button class="role-card acher" id="pick-acher" type="button">
-            <div class="role-portrait a-portrait">⚙</div>
+            <div class="role-portrait a-portrait">🛡</div>
             <h3>阿彻</h3>
-            <p>工程师 · 适合家长</p>
+            <p>强壮的家长 · 护盾勇者</p>
             <ul>
-              <li>按住压力阀门</li>
-              <li>展开临时梁桥</li>
-              <li>护盾挡湍流</li>
+              <li>推动沉重石块</li>
+              <li>护盾猛击眩晕敌人</li>
+              <li>保护小星前进</li>
             </ul>
           </button>
         </div>
@@ -134,7 +139,7 @@
       </div>
     </div>
 
-    <!-- Lobby (host waiting) -->
+    <!-- Lobby -->
     <div id="screen-lobby" class="screen overlay hidden">
       <div class="panel">
         <h2>房间已创建</h2>
@@ -163,7 +168,7 @@
     <!-- How to -->
     <div id="screen-howto" class="screen overlay hidden">
       <div class="panel wide">
-        <h2>操作与关卡</h2>
+        <h2>冒险指南</h2>
         <div class="howto-grid">
           <div>
             <h3>联机</h3>
@@ -171,25 +176,26 @@
               <li>两部手机打开同一地址</li>
               <li>一方「创建房间」并选角色</li>
               <li>另一方输入 4 位口令加入</li>
-              <li>各自全屏操控自己的角色</li>
+              <li>一起探索草原、攻破神庙</li>
             </ol>
           </div>
           <div>
-            <h3>第 1 关 · 四舱室</h3>
+            <h3>第 1 章 · 风之祠</h3>
             <ol>
-              <li><b>动力分流</b> — 小星扳断路器，阿彻同时按住阀门</li>
-              <li><b>移动栈桥</b> — 定时平台 + 临时梁 + 爪钩开关</li>
-              <li><b>双闩闸门</b> — 0.6 秒内同步锁定两侧</li>
-              <li><b>撤离拖运</b> — 共同运送能量核心穿越湍流</li>
+              <li><b>寻钥</b> — 西边洞穴：阿彻推石 / 小星钻矮道</li>
+              <li><b>开庙</b> — 用钥匙打开北方神庙门</li>
+              <li><b>机关</b> — 开关、双踏板、史莱姆房、Boss</li>
+              <li><b>小村</b> — 东南星港（象棋馆 / 商店即将开放）</li>
             </ol>
           </div>
           <div>
-            <h3>桌面调试</h3>
-            <p>WASD 移动 · J / K 动作键</p>
-            <p>失败会快速回到最近检查点，无冗长死亡画面。</p>
+            <h3>操作</h3>
+            <p>虚拟摇杆移动 · 右侧按钮互动/攻击</p>
+            <p>桌面：WASD 移动 · J 互动/攻击 · K 护盾（阿彻）</p>
+            <p>心心归零会回到最近检查点。</p>
           </div>
         </div>
-        <button id="btn-howto-back" class="btn primary">知道了</button>
+        <button id="btn-howto-back" class="btn primary">出发！</button>
       </div>
     </div>
 
@@ -197,8 +203,8 @@
     <div id="screen-pause" class="screen overlay hidden">
       <div class="panel">
         <h2>暂停</h2>
-        <button id="btn-resume" class="btn primary big">继续</button>
-        <button id="btn-restart" class="btn secondary">重开本关</button>
+        <button id="btn-resume" class="btn primary big">继续冒险</button>
+        <button id="btn-restart" class="btn secondary">重开本章</button>
         <button id="btn-quit" class="btn ghost">返回大厅</button>
       </div>
     </div>
@@ -206,12 +212,12 @@
     <!-- Result -->
     <div id="screen-result" class="screen overlay hidden">
       <div class="panel result-panel">
-        <div class="result-badge">电梯重启</div>
-        <h2>观光电梯已接通</h2>
+        <div class="result-badge">星之灵解放</div>
+        <h2>风之祠通关！</h2>
         <div class="stars-big" id="result-stars">★★★</div>
         <ul class="result-stats" id="result-stats"></ul>
         <div class="row-btns">
-          <button id="btn-again" class="btn primary">再来一次</button>
+          <button id="btn-again" class="btn primary">再玩一次</button>
           <button id="btn-result-hub" class="btn ghost">大厅</button>
         </div>
       </div>
@@ -221,7 +227,7 @@
     <div id="vignette" class="vignette"></div>
     <div id="letterbox" class="letterbox hidden"><div class="lb-top"></div><div class="lb-bot"></div><div class="lb-title" id="lb-title"></div></div>
   </div>
-  <script type="module" src="app.bundle.js?v=2609271044"></script>
+  <script type="module" src="app.bundle.js?v=2609271057"></script>
 <script>
 window.addEventListener('error', function (e) {
   var box = document.getElementById('boot-error');
@@ -273,14 +279,12 @@ window.addEventListener('unhandledrejection', function (e) {
     if (hb) hb.addEventListener('click', function () { hide('screen-howto'); show('screen-hub'); });
     console.warn('[starlight] hub fallback click handlers active');
   }
-  // Early bind + retry if module never marks ready
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bindHubFallback);
   else bindHubFallback();
   setTimeout(bindHubFallback, 800);
   setTimeout(bindHubFallback, 2500);
 })();
 </script>
-
 
 <script>
 if ('serviceWorker' in navigator) {
