@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <base href="/xgcoop/" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#0a1628" />
+  <title>星光小岛 · 断裂的观光电梯</title>
+  <link rel="stylesheet" href="css/style.css?v=2609271014" />
+  <script src="vendor/peerjs.min.js"></script>
+</head>
+<body>
+  <div id="boot-error" hidden style="position:fixed;inset:0;z-index:9999;background:#070d18;color:#e8f0ff;padding:24px;font-family:sans-serif;box-sizing:border-box;">
+  <h2 style="color:#ff8f4a;margin-top:0;">页面脚本加载失败</h2>
+  <p id="boot-error-msg" style="line-height:1.6;color:#8aa0c0;word-break:break-word;"></p>
+  <p style="color:#8aa0c0;">请强制刷新。若还不行，把上面英文原文发给我。</p>
+</div>
+<div id="app">
+    <canvas id="game-canvas"></canvas>
+
+    <!-- HUD -->
+    <div id="hud" class="screen hidden">
+      <div class="hud-top">
+        <button id="btn-pause" class="btn-icon" aria-label="暂停">Ⅱ</button>
+        <div class="hud-stats">
+          <span id="hud-role" class="hud-role role-xiaoxing">小星</span>
+          <span id="hud-chamber">舱室 A</span>
+          <span id="hud-sync">默契 ★★★</span>
+        </div>
+        <button id="btn-quality" class="btn-icon small">精致</button>
+      </div>
+      <div class="mission-banner" id="mission-banner">等待指令…</div>
+      <div class="partner-dot" id="partner-dot">● 等待搭档…</div>
+      <div class="checkpoint-toast hidden" id="checkpoint-toast">◆ 检查点已保存</div>
+
+      <div id="controls-xiaoxing" class="role-controls hidden">
+        <div class="stick-wrap" id="stick-wrap-x">
+          <div class="stick-base" id="stick-base-x">
+            <div class="stick-knob" id="stick-knob-x"></div>
+          </div>
+        </div>
+        <div class="action-row">
+          <button id="btn-act-x1" class="action-btn primary-act" type="button">
+            <span class="action-icon" id="icon-x1">⚡</span>
+            <span class="action-name" id="name-x1">互动</span>
+          </button>
+          <button id="btn-act-x2" class="action-btn secondary-act hidden" type="button">
+            <span class="action-icon" id="icon-x2">🪢</span>
+            <span class="action-name" id="name-x2">爪钩</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="controls-acher" class="role-controls hidden">
+        <div class="stick-wrap" id="stick-wrap-a">
+          <div class="stick-base" id="stick-base-a">
+            <div class="stick-knob" id="stick-knob-a"></div>
+          </div>
+        </div>
+        <div class="action-row">
+          <button id="btn-act-a1" class="action-btn primary-act holdable" type="button">
+            <span class="action-icon" id="icon-a1">🔧</span>
+            <span class="action-name" id="name-a1">互动</span>
+          </button>
+          <button id="btn-act-a2" class="action-btn secondary-act" type="button">
+            <span class="action-icon" id="icon-a2">🛡</span>
+            <span class="action-name" id="name-a2">护盾</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hub -->
+    <div id="screen-hub" class="screen overlay">
+      <div class="panel hub-panel">
+        <div class="logo">
+          <div class="logo-mark">✦</div>
+          <h1>星光小岛</h1>
+          <p class="subtitle">断裂的观光电梯 · 亲子双机合作</p>
+        </div>
+        <p class="coop-tagline">两部设备 · 非对称能力 · 默契闯关</p>
+        <div class="stats-bar"><span>★ 最高 <b id="stat-best">0</b></span></div>
+        <div class="hub-main-actions">
+          <button id="btn-create" class="btn primary big">创建房间</button>
+          <button id="btn-join" class="btn secondary big">加入房间</button>
+          <button id="btn-solo" class="btn ghost big">单机练习</button>
+        </div>
+        <div class="level-preview">
+          <div class="lv-card unlocked">
+            <span class="lv-num">01</span>
+            <span class="lv-name">断裂的观光电梯</span>
+            <span class="lv-stars" id="lv1-stars">☆☆☆</span>
+          </div>
+          <div class="lv-card locked"><span>02</span><small>制作中</small></div>
+          <div class="lv-card locked"><span>03</span><small>制作中</small></div>
+        </div>
+        <div class="hub-footer">
+          <button id="btn-howto" class="btn text">操作说明</button>
+          <label class="toggle"><input type="checkbox" id="chk-music" checked /> 音乐</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Role select -->
+    <div id="screen-role" class="screen overlay hidden">
+      <div class="panel">
+        <h2>选择角色</h2>
+        <p class="hint">每人操控一个角色 · 能力完全不同</p>
+        <div class="role-cards">
+          <button class="role-card xiaoxing" id="pick-xiaoxing" type="button">
+            <div class="role-portrait x-portrait">★</div>
+            <h3>小星</h3>
+            <p>敏捷探索者 · 适合孩子</p>
+            <ul>
+              <li>钻入维护管道</li>
+              <li>爪钩锁定机关</li>
+              <li>闪避湍流路径</li>
+            </ul>
+          </button>
+          <button class="role-card acher" id="pick-acher" type="button">
+            <div class="role-portrait a-portrait">⚙</div>
+            <h3>阿彻</h3>
+            <p>工程师 · 适合家长</p>
+            <ul>
+              <li>按住压力阀门</li>
+              <li>展开临时梁桥</li>
+              <li>护盾挡湍流</li>
+            </ul>
+          </button>
+        </div>
+        <button id="btn-role-back" class="btn ghost">返回</button>
+      </div>
+    </div>
+
+    <!-- Lobby (host waiting) -->
+    <div id="screen-lobby" class="screen overlay hidden">
+      <div class="panel">
+        <h2>房间已创建</h2>
+        <p class="hint">把口令告诉搭档</p>
+        <div class="room-code" id="lobby-code">----</div>
+        <p class="status-line" id="lobby-status">等待搭档加入…</p>
+        <p class="role-line">你是：<b id="lobby-role">—</b></p>
+        <button id="btn-lobby-cancel" class="btn ghost">取消</button>
+      </div>
+    </div>
+
+    <!-- Join -->
+    <div id="screen-join" class="screen overlay hidden">
+      <div class="panel">
+        <h2>加入房间</h2>
+        <p class="hint">输入搭档给出的 4 位口令</p>
+        <input id="join-code" class="code-input" maxlength="4" placeholder="口令" autocomplete="off" autocapitalize="characters" />
+        <p class="status-line" id="join-status"></p>
+        <div class="row-btns">
+          <button id="btn-join-go" class="btn primary">连接</button>
+          <button id="btn-join-back" class="btn ghost">返回</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- How to -->
+    <div id="screen-howto" class="screen overlay hidden">
+      <div class="panel wide">
+        <h2>操作与关卡</h2>
+        <div class="howto-grid">
+          <div>
+            <h3>联机</h3>
+            <ol>
+              <li>两部手机打开同一地址</li>
+              <li>一方「创建房间」并选角色</li>
+              <li>另一方输入 4 位口令加入</li>
+              <li>各自全屏操控自己的角色</li>
+            </ol>
+          </div>
+          <div>
+            <h3>第 1 关 · 四舱室</h3>
+            <ol>
+              <li><b>动力分流</b> — 小星扳断路器，阿彻同时按住阀门</li>
+              <li><b>移动栈桥</b> — 定时平台 + 临时梁 + 爪钩开关</li>
+              <li><b>双闩闸门</b> — 0.6 秒内同步锁定两侧</li>
+              <li><b>撤离拖运</b> — 共同运送能量核心穿越湍流</li>
+            </ol>
+          </div>
+          <div>
+            <h3>桌面调试</h3>
+            <p>WASD 移动 · J / K 动作键</p>
+            <p>失败会快速回到最近检查点，无冗长死亡画面。</p>
+          </div>
+        </div>
+        <button id="btn-howto-back" class="btn primary">知道了</button>
+      </div>
+    </div>
+
+    <!-- Pause -->
+    <div id="screen-pause" class="screen overlay hidden">
+      <div class="panel">
+        <h2>暂停</h2>
+        <button id="btn-resume" class="btn primary big">继续</button>
+        <button id="btn-restart" class="btn secondary">重开本关</button>
+        <button id="btn-quit" class="btn ghost">返回大厅</button>
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div id="screen-result" class="screen overlay hidden">
+      <div class="panel result-panel">
+        <div class="result-badge">电梯重启</div>
+        <h2>观光电梯已接通</h2>
+        <div class="stars-big" id="result-stars">★★★</div>
+        <ul class="result-stats" id="result-stats"></ul>
+        <div class="row-btns">
+          <button id="btn-again" class="btn primary">再来一次</button>
+          <button id="btn-result-hub" class="btn ghost">大厅</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+    <div id="vignette" class="vignette"></div>
+    <div id="letterbox" class="letterbox hidden"><div class="lb-top"></div><div class="lb-bot"></div><div class="lb-title" id="lb-title"></div></div>
+  </div>
+  <script type="module" src="app.bundle.js?v=2609271014"></script>
+<script>
+window.addEventListener('error', function (e) {
+  var box = document.getElementById('boot-error');
+  var msg = document.getElementById('boot-error-msg');
+  if (!box || !msg) return;
+  box.hidden = false;
+  msg.textContent = (e && (e.message || e.error)) ? String(e.message || e.error) : 'unknown error';
+}, true);
+window.addEventListener('unhandledrejection', function (e) {
+  var box = document.getElementById('boot-error');
+  var msg = document.getElementById('boot-error-msg');
+  if (!box || !msg) return;
+  box.hidden = false;
+  msg.textContent = e && e.reason ? String(e.reason) : 'promise rejection';
+});
+</script>
+
+<script>
+(function () {
+  function show(id) { var el = document.getElementById(id); if (el) el.classList.remove('hidden'); }
+  function hide(id) { var el = document.getElementById(id); if (el) el.classList.add('hidden'); }
+  function bindHubFallback() {
+    if (window.__STARLIGHT_UI_READY__) return;
+    var create = document.getElementById('btn-create');
+    var join = document.getElementById('btn-join');
+    var solo = document.getElementById('btn-solo');
+    var howto = document.getElementById('btn-howto');
+    if (!create || create.getAttribute('data-fb')) return;
+    create.setAttribute('data-fb', '1');
+    function goRole(mode) { hide('screen-hub'); show('screen-role'); var r=document.getElementById('screen-role'); if (r) r.dataset.mode = mode; }
+    create.addEventListener('click', function () { goRole('host'); });
+    create.addEventListener('touchend', function (e) { e.preventDefault(); goRole('host'); }, { passive: false });
+    if (join) {
+      join.addEventListener('click', function () { hide('screen-hub'); show('screen-join'); });
+      join.addEventListener('touchend', function (e) { e.preventDefault(); hide('screen-hub'); show('screen-join'); }, { passive: false });
+    }
+    if (solo) {
+      solo.addEventListener('click', function () { goRole('solo'); });
+      solo.addEventListener('touchend', function (e) { e.preventDefault(); goRole('solo'); }, { passive: false });
+    }
+    if (howto) {
+      howto.addEventListener('click', function () { hide('screen-hub'); show('screen-howto'); });
+    }
+    var rb = document.getElementById('btn-role-back');
+    if (rb) rb.addEventListener('click', function () { hide('screen-role'); show('screen-hub'); });
+    var jb = document.getElementById('btn-join-back');
+    if (jb) jb.addEventListener('click', function () { hide('screen-join'); show('screen-hub'); });
+    var hb = document.getElementById('btn-howto-back');
+    if (hb) hb.addEventListener('click', function () { hide('screen-howto'); show('screen-hub'); });
+    console.warn('[starlight] hub fallback click handlers active');
+  }
+  // Early bind + retry if module never marks ready
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bindHubFallback);
+  else bindHubFallback();
+  setTimeout(bindHubFallback, 800);
+  setTimeout(bindHubFallback, 2500);
+})();
+</script>
+
+</body>
+</html>
