@@ -4,8 +4,20 @@
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover"
     />
+    <script>
+      (function () {
+        function blockPinch(e) {
+          if (e.touches && e.touches.length > 1) e.preventDefault();
+        }
+        document.addEventListener("gesturestart", function (e) { e.preventDefault(); }, { passive: false });
+        document.addEventListener("gesturechange", function (e) { e.preventDefault(); }, { passive: false });
+        document.addEventListener("gestureend", function (e) { e.preventDefault(); }, { passive: false });
+        document.addEventListener("touchstart", blockPinch, { passive: false });
+        document.addEventListener("touchmove", blockPinch, { passive: false });
+      })();
+    </script>
     <meta name="theme-color" content="#79c7ff" />
     <meta name="description" content="年年学习乐园，为年年准备。点一点，玩一玩。" />
     <meta name="apple-mobile-web-app-title" content="年年学习乐园" />
