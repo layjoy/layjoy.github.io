@@ -1,0 +1,7 @@
+[
+  { "id": "happy", "label": "开心", "emoji": "😊", "line": "你在笑。我也觉得暖暖的。" },
+  { "id": "sad", "label": "难过", "emoji": "😢", "line": "你有点难过。我就在旁边。" },
+  { "id": "angry", "label": "生气", "emoji": "😠", "line": "气鼓鼓的也可以。我们慢慢吹一口气。" },
+  { "id": "scared", "label": "害怕", "emoji": "😨", "line": "害怕的时候，可以靠一靠。我在。" },
+  { "id": "calm", "label": "平静", "emoji": "😌", "line": "静静的，像小池塘。" }
+]

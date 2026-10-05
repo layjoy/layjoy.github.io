@@ -1,0 +1,13 @@
+{
+  "id": "2026-q4",
+  "title": "2026 年第四季度",
+  "quarter": "2026-q4",
+  "parts": {
+    "english": "english.json",
+    "chinese": "chinese.json",
+    "emotions": "emotions.json",
+    "habits": "habits.json",
+    "together": "together.json",
+    "math": "math.json"
+  }
+}

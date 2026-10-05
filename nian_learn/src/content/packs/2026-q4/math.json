@@ -1,0 +1,4 @@
+{
+  "pre": { "max": 10, "choices": 2 },
+  "g1": { "max": 20, "choices": 3 }
+}
