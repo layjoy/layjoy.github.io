@@ -81,7 +81,7 @@ export default defineConfig({
       workbox: {
         globPatterns: ["**/*.{js,css,html,svg,png,json,webmanifest}"],
         navigateFallback: "index.html",
-        navigateFallbackDenylist: [/^\/content\//, /\/ping\.txt$/],
+        navigateFallbackDenylist: [/^\/content\//, /\/ping\.txt$/, /^\/api\//],
         globIgnores: ["**/ping.txt"],
         clientsClaim: true,
         skipWaiting: true,

@@ -1,3 +1,4 @@
+import { MODULE_IDS } from "../lib/defaults";
 import { enabledAgeBands, playableSubjects } from "../lib/registry";
 import { speak } from "../lib/speech";
 import { remainingSeconds } from "../lib/time";
@@ -6,8 +7,9 @@ import type { Screen } from "../types";
 import { Mascot, Shell } from "../ui/bits";
 
 export function Home({ onOpen }: { onOpen: (screen: Screen) => void }) {
-  const { data, setAgeBand, setVoice } = useApp();
+  const { data, setAgeBand, setVoice, sync } = useApp();
   if (!data) return null;
+  const done = MODULE_IDS.reduce((sum, id) => sum + (data.progress.today[id] ?? 0), 0);
   const left = remainingSeconds(data);
   const mins = Math.max(1, Math.ceil(left / 60));
   const timeText = left <= 0 ? "马上要休息啦" : `大约还剩 ${mins} 分钟`;
@@ -23,6 +25,8 @@ export function Home({ onOpen }: { onOpen: (screen: Screen) => void }) {
         </div>
       </div>
       <p className="time-left" data-testid="time-left">{timeText}</p>
+      <p className="note" data-testid="today-done">今天完成了 {done} 件</p>
+      <p className="note" data-testid="sync-status">{sync.detail}</p>
       <div className="timebar" aria-hidden="true">
         <div
           className="timebar-fill"

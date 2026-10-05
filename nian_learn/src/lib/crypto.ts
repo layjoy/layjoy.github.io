@@ -46,6 +46,49 @@ async function deriveAesKey(
   );
 }
 
+export function createFamilyId(): string {
+  const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  const bytes = crypto.getRandomValues(new Uint8Array(8));
+  let out = "NL";
+  bytes.forEach((byte, index) => {
+    if (index === 4) out += "-";
+    out += alphabet[byte % alphabet.length];
+  });
+  return out;
+}
+
+export function normalizeFamilyId(value: string): string {
+  return value.trim().toUpperCase().replace(/\s+/g, "");
+}
+
+export function familyIdError(value: string): string | null {
+  if (!/^NL[A-Z2-9]{4}-[A-Z2-9]{4}$/.test(normalizeFamilyId(value))) return "家庭码看起来不对";
+  return null;
+}
+
+export async function deriveSession(
+  passphrase: string,
+  familyId: string,
+): Promise<{ aesKey: CryptoKey; authToken: string; tokenHash: string }> {
+  const base = await crypto.subtle.importKey("raw", textEncoder.encode(passphrase), "PBKDF2", false, ["deriveBits"]);
+  const bits = await crypto.subtle.deriveBits(
+    {
+      name: "PBKDF2",
+      salt: textEncoder.encode(`nian-learn:${normalizeFamilyId(familyId)}`) as BufferSource,
+      iterations: KDF_ITERATIONS,
+      hash: "SHA-256",
+    },
+    base,
+    512,
+  );
+  const raw = new Uint8Array(bits);
+  const aesKey = await crypto.subtle.importKey("raw", raw.slice(0, 32), { name: "AES-GCM" }, false, ["encrypt", "decrypt"]);
+  const authToken = bytesToB64(raw.slice(32));
+  const digest = await crypto.subtle.digest("SHA-256", textEncoder.encode(authToken));
+  const tokenHash = [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+  return { aesKey, authToken, tokenHash };
+}
+
 export async function createAccount(passphrase: string): Promise<{ meta: MetaFile; dek: CryptoKey }> {
   const salt = crypto.getRandomValues(new Uint8Array(16));
   const wrapIv = crypto.getRandomValues(new Uint8Array(12));

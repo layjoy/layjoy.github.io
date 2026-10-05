@@ -3,7 +3,9 @@ import { useApp } from "../state/AppState";
 import { Mascot, Shell } from "../ui/bits";
 
 export function Setup() {
-  const { setup } = useApp();
+  const { setup, join } = useApp();
+  const [mode, setMode] = useState<"new" | "join">("new");
+  const [family, setFamily] = useState("");
   const [pass, setPass] = useState("");
   const [again, setAgain] = useState("");
   const [msg, setMsg] = useState("");
@@ -11,12 +13,12 @@ export function Setup() {
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault();
-    if (pass !== again) {
+    if (mode === "new" && pass !== again) {
       setMsg("两次不一样，再试一次");
       return;
     }
     setBusy(true);
-    const err = await setup(pass);
+    const err = mode === "join" ? await join(family, pass) : await setup(pass);
     setBusy(false);
     if (err) setMsg(err);
   }
@@ -29,7 +31,26 @@ export function Setup() {
         <p>请爸爸妈妈先设一个口令。孩子不用记。</p>
       </div>
       <form className="card stack" onSubmit={onSubmit}>
-        <p>学习记录只留在这台设备里，并用这个口令加密。建议每天玩 20 到 30 分钟。现在默认每天 25 分钟，每次 15 分钟，然后休息 5 分钟。之后可以改。</p>
+        <p>学习记录会先用这个口令加密，再存到家里的服务器。没有网络时先记在这台设备，连上后再送过去。建议每天玩 20 到 30 分钟。现在默认每天 25 分钟，每次 15 分钟，然后休息 5 分钟。之后可以改。</p>
+        <div className="row" role="group" aria-label="家庭">
+          <button type="button" className={mode === "new" ? "tap" : "tap ghost"} data-testid="setup-new" onClick={() => setMode("new")}>
+            这台是新的
+          </button>
+          <button type="button" className={mode === "join" ? "tap" : "tap ghost"} data-testid="setup-join" onClick={() => setMode("join")}>
+            加入已有家庭
+          </button>
+        </div>
+        {mode === "join" ? (
+          <label>
+            家庭码
+            <input
+              data-testid="setup-family"
+              autoComplete="off"
+              value={family}
+              onChange={(e) => setFamily(e.target.value)}
+            />
+          </label>
+        ) : null}
         <label>
           家长口令
           <input
@@ -40,19 +61,21 @@ export function Setup() {
             onChange={(e) => setPass(e.target.value)}
           />
         </label>
-        <label>
-          再输入一次
-          <input
-            data-testid="setup-pass2"
-            type="password"
-            autoComplete="new-password"
-            value={again}
-            onChange={(e) => setAgain(e.target.value)}
-          />
-        </label>
+        {mode === "new" ? (
+          <label>
+            再输入一次
+            <input
+              data-testid="setup-pass2"
+              type="password"
+              autoComplete="new-password"
+              value={again}
+              onChange={(e) => setAgain(e.target.value)}
+            />
+          </label>
+        ) : null}
         {msg ? <p className="msg" role="alert">{msg}</p> : null}
         <button className="tap" type="submit" data-testid="setup-submit" disabled={busy}>
-          {busy ? "请稍等" : "设好了"}
+          {busy ? "请稍等" : mode === "join" ? "加入" : "设好了"}
         </button>
       </form>
     </Shell>

@@ -99,6 +99,7 @@ function Frame() {
   }, [api.lock, screen, api.data, api.needsSetup, api.needsUnlock]);
 
   if (!api.ready) return <p className="loading">正在准备…</p>;
+  if (api.backendMissing) return <p className="loading">还没有配置后端。请家长先把服务器地址配好，再给孩子用。</p>;
   if (api.needsSetup) return <Setup />;
   if (api.needsUnlock) return <Unlock />;
   if (!api.pack || !api.data) return <p className="loading">{api.packError ?? "正在准备内容…"}</p>;

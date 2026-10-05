@@ -7,7 +7,7 @@ import { Shell } from "../ui/bits";
 
 export function Parent({ onHome }: { onHome: () => void }) {
   const api = useApp();
-  const { data, parentAuthed, enterParent, saveRules, setAgeBand, setVoice, exportRules, importRules, changePass } = api;
+  const { data, parentAuthed, enterParent, saveRules, setAgeBand, setVoice, exportRules, importRules, changePass, familyId, sync } = api;
   const [pass, setPass] = useState("");
   const [msg, setMsg] = useState("");
   const [busy, setBusy] = useState(false);
@@ -102,7 +102,7 @@ export function Parent({ onHome }: { onHome: () => void }) {
     setBusy(true);
     const err = await changePass(nextPass);
     setBusy(false);
-    setMsg(err ?? "口令已更新。请记住新口令，旧口令不能再解开规则包。");
+    setMsg(err ?? "口令已更新。请记住新口令。旧口令不能再解开规则包，也不能在另一台设备上读学习记录。");
     if (!err) setNextPass("");
   }
 
@@ -120,6 +120,12 @@ export function Parent({ onHome }: { onHome: () => void }) {
           今天用时 {formatClock(data.usage.secondsToday)}。完成：英语 {today.english ?? 0}，数学 {today.math ?? 0}，语文 {today.chinese ?? 0}，心情 {today.emotion ?? 0}，习惯 {today.habits ?? 0}，一起玩 {today.together ?? 0}。
         </p>
         <p className="hint">这里只显示次数和用时，不显示题目和回答。</p>
+      </section>
+      <section className="card stack">
+        <h2>家庭同步</h2>
+        <p>学习记录加密后存在后端。另一台设备用这个家庭码和同一个口令加入，刷新后就能读到。请抄下来。</p>
+        <p data-testid="family-code">{familyId || "还没有"}</p>
+        <p data-testid="sync-status-parent">{sync.detail}</p>
       </section>
       <section className="card stack">
         <h2>时长</h2>

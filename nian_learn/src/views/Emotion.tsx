@@ -60,7 +60,7 @@ export function Emotion({ onHome }: { onHome: () => void }) {
             className="tap"
             data-testid="emo-next"
             onClick={() => {
-              record("emotion");
+              record("emotion", picked ? { emotionId: picked } : undefined);
               setDone(true);
               setStep(3);
               speak("我在这儿");
