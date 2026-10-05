@@ -1,0 +1,5 @@
+{
+  "packId": "2026-q4",
+  "title": "2026 年第四季度",
+  "note": "按季度换内容时，在 content/packs/ 下新增目录，例如 2027-q1，并把这里的 packId 改成该目录名。目录里要有 manifest.json 以及它列出的文件。应用通过 loadContentPack 读取。不要把儿童学习记录放进内容包。"
+}

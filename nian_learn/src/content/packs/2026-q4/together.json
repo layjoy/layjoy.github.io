@@ -1,0 +1,19 @@
+{
+  "countByBand": { "pre": 5, "g1": 8 },
+  "colors": [
+    { "id": "red", "label": "红色", "swatch": "#d98b84" },
+    { "id": "yellow", "label": "黄色", "swatch": "#e2b84d" },
+    { "id": "blue", "label": "蓝色", "swatch": "#7ea0c4" },
+    { "id": "green", "label": "绿色", "swatch": "#7eae90" }
+  ],
+  "praises": {
+    "child": ["今天和你一起真好", "我喜欢现在"],
+    "parent": ["你很认真", "你的想法很有趣"]
+  },
+  "lines": {
+    "colorsAsk": "你今天最喜欢哪种颜色？",
+    "colorsHeard": "我听到了",
+    "countAsk": "我们一起数星星",
+    "praiseAsk": "互相说一句好听的话"
+  }
+}

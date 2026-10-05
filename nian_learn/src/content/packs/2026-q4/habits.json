@@ -1,0 +1,5 @@
+[
+  { "id": "brush", "label": "刷牙", "emoji": "🦷", "hint": "早上或晚上刷一刷" },
+  { "id": "read", "label": "阅读", "emoji": "📘", "hint": "看一会儿书，或听一个故事" },
+  { "id": "sleep", "label": "早睡", "emoji": "🌙", "hint": "到点就去休息" }
+]
