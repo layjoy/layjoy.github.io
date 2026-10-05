@@ -44,14 +44,29 @@ function Frame() {
     window.addEventListener("hashchange", onHash);
     if (!location.hash) location.replace("#/home");
     else onHash();
-    const on = () => setOnline(true);
-    const off = () => setOnline(false);
-    window.addEventListener("online", on);
-    window.addEventListener("offline", off);
+    let cancel = false;
+    const syncOnline = async () => {
+      if (!navigator.onLine) {
+        if (!cancel) setOnline(false);
+        return;
+      }
+      try {
+        const res = await fetch(`${import.meta.env.BASE_URL}ping.txt`, { cache: "no-store" });
+        if (!cancel) setOnline(res.ok);
+      } catch {
+        if (!cancel) setOnline(false);
+      }
+    };
+    void syncOnline();
+    window.addEventListener("online", syncOnline);
+    window.addEventListener("offline", syncOnline);
+    window.addEventListener("pageshow", syncOnline);
     return () => {
+      cancel = true;
       window.removeEventListener("hashchange", onHash);
-      window.removeEventListener("online", on);
-      window.removeEventListener("offline", off);
+      window.removeEventListener("online", syncOnline);
+      window.removeEventListener("offline", syncOnline);
+      window.removeEventListener("pageshow", syncOnline);
     };
   }, []);
 

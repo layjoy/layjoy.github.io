@@ -165,7 +165,7 @@ input[type="password"], input[type="text"] {
 }
 @media (orientation: landscape) and (max-height: 520px) {
   .shell { padding: 8px 16px 16px; gap: 8px; }
-  .hero p, .note { display: none; }
+  .hero p { display: none; }
   .mascot { width: 48px; height: 48px; }
   .module-grid { grid-template-columns: repeat(3, 1fr); }
   h1 { font-size: 28px; }
